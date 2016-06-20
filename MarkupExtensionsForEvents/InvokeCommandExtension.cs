@@ -40,12 +40,24 @@ namespace MarkupExtensionsForEvents
 
                 if (type != null)
                 {
-                    var target = pvt.TargetObject as FrameworkElement;
-
-                    _targetObject = new TargetObject();
-                    this.SetBinding(target.DataContext);
-                    target.DataContextChanged += (s, e) => { this.SetBinding(e.NewValue); };
-
+                    var element = pvt.TargetObject as FrameworkElement;
+                    var contentElement = pvt.TargetObject as FrameworkContentElement;
+                    if (element != null)
+                    {
+                        _targetObject = new TargetObject();
+                        this.SetBinding(element.DataContext);
+                        element.DataContextChanged += (s, e) => { this.SetBinding(e.NewValue); };
+                    }
+                    else if (contentElement != null)
+                    {
+                        _targetObject = new TargetObject();
+                        this.SetBinding(contentElement.DataContext);
+                        contentElement.DataContextChanged += (s, e) => { this.SetBinding(e.NewValue); };
+                    }
+                    else
+                    {
+                        return null;
+                    }
 
                     // ここで、イベントハンドラを作成し、マークアップ拡張の結果として返す
                     var nonGenericMethod = GetType().GetMethod("PrivateHandlerGeneric", BindingFlags.NonPublic | BindingFlags.Instance);

@@ -33,6 +33,10 @@
                        Fill="#FFF4F4F5"
                        MouseEnter="{local:InvokeCommand ShowMessageCommand}"
                        Stroke="Black" />
+
+            <TextBlock>
+                <Hyperlink MouseEnter="{local:InvokeCommand ShowMessageCommand}">Link</Hyperlink>
+            </TextBlock>
         </StackPanel>
 
         <StackPanel Grid.Column="1">
